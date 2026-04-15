@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doğa Akın — Visual Communication Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --bg2: #141414;
+    --surface: #1a1a1a;
+    --border: rgba(255,255,255,0.08);
+    --border-mid: rgba(255,255,255,0.15);
+    --text: #e8e4dc;
+    --text-muted: rgba(232,228,220,0.45);
+    --text-dim: rgba(232,228,220,0.25);
+    --accent: #c8b89a;
+    --accent2: #8a7a68;
+    --red: #d4503a;
+    --mono: 'Space Mono', monospace;
+    --serif: 'Instrument Serif', serif;
+    --sans: 'EB Garamond', serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    cursor: crosshair;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* CURSOR */
+  .cursor-dot {
+    position: fixed;
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.15s, height 0.15s, background 0.15s, border 0.15s;
+  }
+
+  /* HEADER */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 0.5px solid var(--border);
+    background: rgba(13,13,13,0.93);
+    backdrop-filter: blur(14px);
+  }
+
+  .logo {
+    font-family: var(--serif);
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+
+  .logo span { color: var(--text-muted); font-style: italic; }
+
+  nav { display: flex; gap: 32px; align-items: center; }
+
+  nav a {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--text); }
+  nav a.active { color: var(--accent); }
+
+  /* TICKER */
+  .ticker {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 40px;
+    border-bottom: 0.5px solid var(--border);
+    background: var(--bg2);
+    overflow: hidden;
+    margin-top: 64px;
+  }
+
+  .ticker-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ticker-text {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    animation: ticker 24s linear infinite;
+    white-space: nowrap;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ========================
+     1. HOME / LANDING
+  ======================== */
+  .home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .home-left {
+    padding: 80px 60px 80px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .home-eyebrow {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+  }
+
+  .home-name {
+    font-family: var(--serif);
+    font-size: clamp(56px, 6.5vw, 92px);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    margin-bottom: 36px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .home-name em { font-style: italic; color: var(--accent); }
+
+  .home-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 24px;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+
+  .home-tagline {
+    font-family: var(--sans);
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 380px;
+    margin-bottom: 48px;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  .home-tagline strong { color: var(--text); font-weight: 400; }
+
+  .home-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    animation: fadeUp 0.9s 0.3s ease both;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 0.5px solid var(--border);
+    padding: 5px 10px;
+    transition: all 0.2s;
+  }
+
+  .tag:hover { color: var(--accent); border-color: var(--accent2); }
+
+  .home-bottom {
+    display: flex;
+    gap: 32px;
+    padding-top: 40px;
+    border-top: 0.5px solid var(--border);
+    margin-top: 40px;
+  }
+
+  .home-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .home-stat-num {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .home-stat-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .home-right {
+    display: grid;
+    grid-template-rows: 1fr auto;
+  }
+
+  .home-image-area {
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home-image-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .img-placeholder {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 2;
+  }
+
+  .ph-cross {
+    width: 28px; height: 28px;
+    position: relative;
+    margin: 0 auto 12px;
+    opacity: 0.2;
+  }
+
+  .ph-cross::before {
+    content: '';
+    position: absolute;
+    width: 1px; height: 100%;
+    background: var(--text);
+    left: 50%; top: 0;
+  }
+
+  .ph-cross::after {
+    content: '';
+    position: absolute;
+    height: 1px; width: 100%;
+    background: var(--text);
+    top: 50%; left: 0;
+  }
+
+  .home-meta {
+    padding: 18px 28px;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .home-meta span {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* ========================
+     2. ABOUT
+  ======================== */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 40px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .section-count {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .about-photo-col {
+    border-right: 0.5px solid var(--border);
+    min-height: 480px;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-photo-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .about-text-col {
+    padding: 56px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .about-bio-block {}
+
+  .about-block-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+
+  .about-bio {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 520px;
+  }
+
+  .about-bio strong { color: var(--text); font-weight: 400; }
+
+  .about-objectives {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .about-objectives strong { color: var(--text); font-weight: 400; }
+
+  /* SKILLS in about */
+  .skills-wrap {
+    border-bottom: 0.5px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .skill-col {
+    padding: 36px 40px;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .skill-col:last-child { border-right: none; }
+
+  .skill-col-title {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .skill-item {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 6px 0;
+    border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 1.4;
+  }
+
+  .skill-level { display: flex; gap: 3px; }
+
+  .skill-dot {
+    width: 4px; height: 4px;
+    border: 0.5px solid var(--border-mid);
+    border-radius: 50%;
+  }
+
+  .skill-dot.filled { background: var(--accent2); border-color: var(--accent2); }
+
+  /* soft skills strip */
+  .soft-skills {
+    padding: 28px 40px;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .soft-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-right: 8px;
+  }
+
+  /* ========================
+     3. PROJECTS
+  ======================== */
+  .projects-intro {
+    padding: 48px 40px;
+    border-bottom: 0.5px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .projects-intro-left {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .projects-intro-left em { font-style: italic; color: var(--accent); }
+
+  .projects-intro-right {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    padding-top: 6px;
+  }
+
+  /* Project full entry */
+  .project-entry {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .project-entry-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .project-entry-title-col {
+    padding: 40px 40px;
+    border-right: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .project-entry-number {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+
+  .project-entry-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .project-entry-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .project-entry-meta-col {
+    padding: 40px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-content: start;
+  }
+
+  .project-meta-item {}
+
+  .project-meta-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .project-meta-value {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .project-meta-value strong { color: var(--text); font-weight: 400; }
+
+  /* Image area */
+  .project-image-full {
+    width: 100%;
+    min-height: 400px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .project-image-full img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    position: absolute; inset: 0;
+  }
+
+  .project-image-full.short { min-height: 260px; }
+  .project-image-full.tall { min-height: 520px; }
+
+  /* 2-col image grid */
+  .project-img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .project-img-cell {
+    background: var(--surface);
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .project-img-cell:last-child { border-right: none; }
+
+  .project-img-cell img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    position: absolute; inset: 0;
+  }
+
+  /* Process narrative */
+  .project-narrative {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .narrative-col {
+    padding: 40px;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .narrative-col:last-child { border-right: none; }
+
+  .narrative-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 16px;
+  }
+
+  .narrative-text {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .narrative-text strong { color: var(--text); font-weight: 400; }
+
+  /* proj color backgrounds */
+  .proj-bg-1 { background: #161410; }
+  .proj-bg-2 { background: #0e1318; }
+  .proj-bg-3 { background: #13100e; }
+  .proj-bg-4 { background: #0d1310; }
+
+  .proj-noise {
+    position: absolute; inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+  }
+
+  .proj-img-label {
+    position: absolute;
+    bottom: 14px; right: 14px;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .grid-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(200,184,154,0.2);
+    text-align: center;
+  }
+
+  /* ========================
+     4. EXPERIENCE (in About)
+  ======================== */
+  .exp-section {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .exp-item {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .exp-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 80px 1.1fr 1fr 120px 28px;
+    padding: 18px 40px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    text-align: left;
+    transition: background 0.2s;
+    align-items: center;
+    gap: 24px;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .exp-row:hover,
+  .exp-item.open .exp-row {
+    background: var(--surface);
+  }
+
+  .exp-year {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .exp-role {
+    font-family: var(--sans);
+    font-size: 15px;
+  }
+
+  .exp-company {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .exp-type {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    text-align: right;
+  }
+
+  .exp-toggle {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--text-dim);
+    text-align: right;
+    transition: transform 0.25s ease, color 0.2s ease;
+  }
+
+  .exp-item.open .exp-toggle {
+    transform: rotate(45deg);
+    color: var(--accent);
+  }
+
+  .exp-panel {
+    display: none;
+    padding: 0 40px 32px 40px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+  }
+
+  .exp-item.open .exp-panel {
+    display: block;
+  }
+
+  .exp-panel-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 28px;
+    padding-top: 22px;
+    border-top: 0.5px solid rgba(255,255,255,0.05);
+  }
+
+  .exp-copy {
+    max-width: 620px;
+  }
+
+  .exp-summary {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 18px;
+  }
+
+  .exp-summary strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .exp-points {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .exp-point {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 14px;
+    padding-top: 10px;
+    border-top: 0.5px solid rgba(255,255,255,0.05);
+  }
+
+  .exp-point-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-top: 2px;
+  }
+
+  .exp-point-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .exp-point-text strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  .exp-carousel-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .exp-carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(260px, 1fr);
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .exp-carousel::-webkit-scrollbar {
+    height: 7px;
+  }
+
+  .exp-carousel::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.12);
+  }
+
+  .exp-slide {
+    min-height: 240px;
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+    border: 0.5px solid rgba(255,255,255,0.06);
+    scroll-snap-align: start;
+  }
+
+  .exp-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .exp-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.34));
+    pointer-events: none;
+  }
+
+  .exp-slide-label {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    z-index: 1;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .exp-carousel-note {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+
+
+  /* PORTFOLIO CATEGORY SYSTEM */
+  .portfolio-section {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .portfolio-category {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .portfolio-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 40px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .portfolio-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+  }
+
+  .portfolio-header h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .portfolio-item {
+    min-height: 320px;
+    border-right: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s ease;
+  }
+
+  .portfolio-item:last-child {
+    border-right: none;
+  }
+
+  .portfolio-item:hover {
+    background: #202020;
+  }
+
+  .portfolio-thumb {
+    min-height: 260px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .portfolio-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .portfolio-thumb.contain img {
+    object-fit: contain;
+    padding: 10px;
+    background: #e5e2db;
+  }
+
+  .portfolio-thumb iframe {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    border: none;
+    pointer-events: auto;
+  }
+
+  .portfolio-meta {
+    padding: 16px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .portfolio-item-title {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.35;
+  }
+
+  .portfolio-item-type {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+
+  /* PORTFOLIO ACCORDION */
+  .portfolio-accordion {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .portfolio-acc-item {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .portfolio-acc-header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 80px 1fr 180px 28px;
+    gap: 24px;
+    align-items: center;
+    padding: 22px 40px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font: inherit;
+  }
+
+  .portfolio-acc-header:hover,
+  .portfolio-acc-item.open .portfolio-acc-header {
+    background: var(--surface);
+  }
+
+  .portfolio-acc-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+  }
+
+  .portfolio-acc-title {
+    font-family: var(--serif);
+    font-size: clamp(24px, 2.2vw, 34px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  .portfolio-acc-summary {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 320px;
+    justify-self: end;
+  }
+
+  .portfolio-acc-toggle {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--text-dim);
+    text-align: right;
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+
+  .portfolio-acc-item.open .portfolio-acc-toggle {
+    transform: rotate(45deg);
+    color: var(--accent);
+  }
+
+  .portfolio-acc-panel {
+    display: none;
+    padding: 0 40px 40px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+  }
+
+  .portfolio-acc-item.open .portfolio-acc-panel {
+    display: block;
+  }
+
+  .portfolio-acc-panel-inner {
+    padding-top: 24px;
+    border-top: 0.5px solid rgba(255,255,255,0.05);
+  }
+
+  .portfolio-acc-meta {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .portfolio-acc-meta-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-top: 2px;
+  }
+
+  .portfolio-acc-meta-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    max-width: 760px;
+  }
+
+  .portfolio-acc-meta-text strong {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* ========================
+     5. CONTACT
+  ======================== */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact-left {
+    padding: 80px 40px;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4vw, 60px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+
+  .contact-heading em { font-style: italic; color: var(--accent); }
+
+  .contact-links { display: flex; flex-direction: column; }
+
+  .contact-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 0.5px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover .clink-name { color: var(--accent); }
+  .contact-link:hover .clink-arrow { transform: translate(4px, -4px); }
+
+  .clink-name { font-size: 17px; transition: color 0.2s; }
+
+  .clink-arrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    transition: transform 0.2s;
+  }
+
+  .contact-right {
+    padding: 80px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .contact-info-block { margin-bottom: 28px; }
+
+  .ci-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .ci-value { font-size: 15px; color: var(--text-muted); }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    padding: 12px 0;
+    border-bottom: 0.5px solid var(--border);
+    border-top: 0.5px solid var(--border);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+  }
+
+  .marquee-item {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+    padding: 0 36px;
+  }
+
+  .marquee-item span { color: var(--accent2); margin: 0 6px; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .footer-l, .footer-r {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 860px) {
+    header { padding: 16px 20px; }
+    nav { gap: 16px; }
+    .ticker { padding: 10px 20px; }
+    .home { grid-template-columns: 1fr; }
+    .home-right { display: none; }
+    .home-left { padding: 60px 20px 40px; }
+    .about-layout { grid-template-columns: 1fr; }
+    .about-photo-col { min-height: 300px; }
+    .about-text-col { padding: 40px 20px; }
+    .skills-wrap { grid-template-columns: 1fr 1fr; }
+    .skill-col { padding: 24px 20px; }
+    .projects-intro { grid-template-columns: 1fr; padding: 32px 20px; gap: 20px; }
+    .portfolio-header { padding: 24px 20px; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-item { min-height: auto; border-right: none; border-bottom: 0.5px solid var(--border); }
+    .portfolio-thumb { min-height: 240px; }
+    .portfolio-acc-header { grid-template-columns: 56px 1fr 24px; gap: 10px; padding: 18px 20px; }
+    .portfolio-acc-summary { display: none; }
+    .portfolio-acc-panel { padding: 0 20px 24px; }
+    .portfolio-acc-meta { grid-template-columns: 1fr; gap: 6px; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-left { border-right: none; border-bottom: 0.5px solid var(--border); padding: 48px 20px; }
+    .contact-right { padding: 48px 20px; }
+    .exp-row { grid-template-columns: 60px 1fr 24px; gap: 10px; padding: 16px 20px; }
+    .exp-company, .exp-type { display: none; }
+    .exp-panel { padding: 0 20px 24px 20px; }
+    .exp-panel-inner { grid-template-columns: 1fr; }
+    .exp-point { grid-template-columns: 1fr; gap: 6px; }
+    .exp-carousel { grid-auto-columns: 85%; }
+    .section-header, .soft-skills { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!--
+GitHub Pages note:
+Upload this file as index.html and keep all image assets in the same folder as this file.
+Required local assets referenced here:
+20241013-lalala.jpg
+20240527-DSCF4855-2.jpg
+imam-bukhari.jpeg
+kutahya-diorama.jpg
+efes-mapping.jpeg
+xtopiatilted.png
+xtopiaruffles_1.png
+20220417-OUZ06771.jpg
+ka-post1.jpg
+20220314-OUZ05537.jpg
+efula-1.png
+efula-2.png
+efula-3.jpg
+Majalisimg-1.png
+moetevent-1.png
+Ogulpersonal-1.png
+magazine_mockup_2.jpg
+samedog.png
+lala.jpg
+ux-1.png
+ux-2.png
+ux-3.png
+-->
+
+<div class="cursor-dot" id="cursor"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Doğa Akın <span>— VCD</span></div>
+  <nav>
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-label">Open to Work</span>
+  <span class="ticker-text">Visual Communication Designer · Experiential Design · Immersive Systems · TouchDesigner · Projection Mapping · Creative Technology · Interactive Installations · Real-time Graphics · Sound & Visuals · Museum Design · Visual Communication Designer · Experiential Design · Immersive Systems · TouchDesigner · Projection Mapping · Creative Technology · Interactive Installations · Real-time Graphics · Sound & Visuals · Museum Design ·</span>
+</div>
+
+<!-- ========================
+     1. HOME
+======================== -->
+<section id="home" class="home">
+  <div class="home-left">
+    <div>
+      <div class="home-eyebrow">Portfolio — 2025</div>
+      <h1 class="home-name">Doğa<br><em>Akın</em></h1>
+      <div class="home-role">Visual Communication Designer</div>
+      <p class="home-tagline">
+        I build <strong>systems, not objects</strong> — experiential environments where space, story, and technology converge. From museum interactive systems to projection-mapped heritage sites, I design for presence, not passive consumption.
+      </p>
+      <div class="home-tags">
+        <span class="tag">Experiential Design</span>
+        <span class="tag">Projection Mapping</span>
+        <span class="tag">TouchDesigner</span>
+        <span class="tag">Interactive Installations</span>
+        <span class="tag">Live Visuals</span>
+        <span class="tag">UX / UI</span>
+        <span class="tag">Editorial Design</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="home-right">
+    <div class="home-image-area">
+      <img src="20241013-lalala.jpg" alt="Portrait or reel still">
+    </div>
+    <div class="home-meta">
+      <span>Ankara, TR</span>
+      <span>VCD · TED University</span>
+      <span>doga.akin2@gmail.com</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================
+     2. ABOUT
+======================== -->
+<div class="section-header" id="about">
+  <span class="section-label">About Me</span>
+  <span class="section-count">02</span>
+</div>
+
+<div class="about-layout">
+  <div class="about-photo-col">
+    <img src="20240527-DSCF4855-2.jpg" alt="Doğa Akın portrait">
+  </div>
+  <div class="about-text-col">
+
+    <div class="about-bio-block">
+      <div class="about-block-label">Bio</div>
+      <p class="about-bio">
+        I'm <strong>Doğa Akın</strong>, a fourth-year Visual Communication Design student at TED University, Ankara. My practice sits at the intersection of <strong>spatial storytelling, real-time systems, and cultural production</strong> — designing experiences that demand presence, not passive consumption.<br><br>
+        Through an internship at <strong>Project Istanbul</strong>, I work on UX/interactive learning systems, projection mapping environments, and lighting installations across Turkey, Uzbekistan, and Saudi Arabia. My graduation project translates <strong>lithography as a knowledge infrastructure</strong> — field-researched at legacy studios in Paris and Berlin.<br><br>
+        I work between strategy and execution: mapping systems in Miro, prototyping in Figma, building in TouchDesigner. I see design not as decoration but as <strong>architecture for human experience</strong>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="section-header">
+  <span class="section-label">Skills</span>
+  <span class="section-count">Technical</span>
+</div>
+
+<div class="skills-wrap">
+  <div class="skill-col">
+    <div class="skill-col-title">Real-time & Generative</div>
+    <div class="skill-item">TouchDesigner <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">Unreal Engine <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">p5.js <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">Blender <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+  </div>
+  <div class="skill-col">
+    <div class="skill-col-title">Design Tools</div>
+    <div class="skill-item">Figma <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div></div></div>
+    <div class="skill-item">InDesign <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">Illustrator <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">After Effects <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+  </div>
+  <div class="skill-col">
+    <div class="skill-col-title">Sound & Live</div>
+    <div class="skill-item">Ableton + M4L <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">TidalCycles <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">Strudel <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">Reaper / Sonic Pi <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+  </div>
+  <div class="skill-col">
+    <div class="skill-col-title">Systems & Web</div>
+    <div class="skill-item">Miro <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">ReadyMag / Cargo <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">Photoshop <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div></div></div>
+    <div class="skill-item">Premiere Pro <div class="skill-level"><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot filled"></div><div class="skill-dot"></div><div class="skill-dot"></div></div></div>
+  </div>
+</div>
+
+<!-- SOFT SKILLS -->
+<div class="soft-skills">
+  <span class="soft-label">Soft Skills</span>
+  <span class="tag">Systems Thinking</span>
+  <span class="tag">Spatial Reasoning</span>
+  <span class="tag">Cross-disciplinary Collaboration</span>
+  <span class="tag">Narrative Design</span>
+  <span class="tag">Research & Field Work</span>
+  <span class="tag">Concept Development</span>
+  <span class="tag">Workshop Facilitation</span>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="section-header">
+  <span class="section-label">Experience</span>
+  <span class="section-count">Work History</span>
+</div>
+
+<div class="exp-section">
+  <article class="exp-item open">
+    <button class="exp-row" type="button" aria-expanded="true">
+      <span class="exp-year">2025</span>
+      <span class="exp-role">Experiential Designer Intern</span>
+      <span class="exp-company">Project Istanbul — Projection Mapping, Museum Systems, Spatial Storytelling</span>
+      <span class="exp-type">Design / Production</span>
+      <span class="exp-toggle">+</span>
+    </button>
+    <div class="exp-panel">
+      <div class="exp-panel-inner">
+        <div class="exp-copy">
+          <p class="exp-summary">
+            Contributed to <strong>large-scale immersive and cultural projects</strong> across projection mapping, interactive museum systems, and experience design. This role brought research, interface logic, and spatial storytelling into the same production pipeline.
+          </p>
+          <div class="exp-points">
+            <div class="exp-point">
+              <div class="exp-point-label">Focus</div>
+              <div class="exp-point-text">Worked on projects including <strong>Imam Bukhari Museum &amp; Islamic Civilization Center</strong>, <strong>Dumlupınar Diorama Museum</strong>, and <strong>Ephesus Archaeological Site</strong>.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">What I Did</div>
+              <div class="exp-point-text">Supported <strong>UX flows, visual narratives, presentation decks, spatial content logic, timeline structuring</strong>, and design communication for production-ready outputs.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">Tools</div>
+              <div class="exp-point-text">Figma, Miro, Illustrator, InDesign, After Effects, TouchDesigner, Blender.</div>
+            </div>
+          </div>
+        </div>
+        <div class="exp-carousel-wrap">
+          <div class="exp-carousel">
+            <div class="exp-slide proj-bg-1"><img src="imam-bukhari.jpeg" alt="Imam Bukhari Museum"><span class="exp-slide-label">Imam Bukhari Museum / Interactive Museum Systems</span></div>
+            <div class="exp-slide proj-bg-2"><img src="kutahya-diorama.jpg" alt="Dumlupınar Diorama Museum"><span class="exp-slide-label">Dumlupınar / Projection Mapping</span></div>
+            <div class="exp-slide proj-bg-3"><img src="efes-mapping.jpeg" alt="Ephesus Mapping"><span class="exp-slide-label">Ephesus / Heritage Activation</span></div>
+          </div>
+          <div class="exp-carousel-note"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="exp-item">
+    <button class="exp-row" type="button" aria-expanded="false">
+      <span class="exp-year">2025</span>
+      <span class="exp-role">Creative Intern</span>
+      <span class="exp-company">xtopia — Web Design, Creative Services, Digital Experience</span>
+      <span class="exp-type">Creative</span>
+      <span class="exp-toggle">+</span>
+    </button>
+    <div class="exp-panel">
+      <div class="exp-panel-inner">
+        <div class="exp-copy">
+          <p class="exp-summary">
+            Worked within a digital creative workflow spanning <strong>website structure, visual direction, content layout, and interface refinement</strong>. The role sharpened how brand expression translates into modular web systems.
+          </p>
+          <div class="exp-points">
+            <div class="exp-point">
+              <div class="exp-point-label">Focus</div>
+              <div class="exp-point-text">Creative services support for <strong>web design, UI refinement, visual communication, and brand-aligned digital outputs</strong>.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">What I Did</div>
+              <div class="exp-point-text">Produced layout explorations, polished presentation material, and contributed to the <strong>overall structure and visual consistency</strong> of web-facing work.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">Tools</div>
+              <div class="exp-point-text">Figma, Adobe Creative Suite, collaborative review workflows.</div>
+            </div>
+          </div>
+        </div>
+        <div class="exp-carousel-wrap">
+          <div class="exp-carousel">
+            <div class="exp-slide proj-bg-1"><img src="xtopiatilted.png" alt="xtopia creative services visual"><span class="exp-slide-label">Creative Services</span></div>
+            <div class="exp-slide proj-bg-2"><img src="xtopiaruffles_1.png" alt="xtopia UI visual consistency"><span class="exp-slide-label">UI / Visual Consistency</span></div>
+          </div>
+          <div class="exp-carousel-note"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="exp-item">
+    <button class="exp-row" type="button" aria-expanded="false">
+      <span class="exp-year">2024–25</span>
+      <span class="exp-role">Gallery Intern</span>
+      <span class="exp-company">KA — Space for Visual Culture &amp; Artistic Thinking</span>
+      <span class="exp-type">Art / Gallery</span>
+      <span class="exp-toggle">+</span>
+    </button>
+    <div class="exp-panel">
+      <div class="exp-panel-inner">
+        <div class="exp-copy">
+          <p class="exp-summary">
+            Supported the gallery across <strong>exhibition communication, catalogue work, photography, social media, and installation-adjacent production needs</strong>. The role connected visual design with the day-to-day rhythm of a contemporary art space.
+          </p>
+          <div class="exp-points">
+            <div class="exp-point">
+              <div class="exp-point-label">Exhibitions</div>
+              <div class="exp-point-text">Contributed around exhibitions including <strong>CTY: Pieces</strong>, <strong>Murat Kahya — Good morning, I’m off to bed!</strong>, and <strong>Just Arrived: Here, There, Over There</strong>.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">What I Did</div>
+              <div class="exp-point-text">Assisted with <strong>catalogue editing/writing, exhibition photography, social media outputs, and visual documentation</strong>.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">Value</div>
+              <div class="exp-point-text">Built sensitivity toward <strong>art handling, curatorial tone, documentation quality, and exhibition storytelling</strong>.</div>
+            </div>
+          </div>
+        </div>
+        <div class="exp-carousel-wrap">
+          <div class="exp-carousel">
+            <div class="exp-slide proj-bg-3"><img src="20220417-OUZ06771.jpg" alt="Here, There, Over There documentation"><span class="exp-slide-label">Exhibition View</span></div>
+            <div class="exp-slide proj-bg-1"><img src="ka-post1.jpg" alt="KA catalogue and print material"><span class="exp-slide-label">Catalogue / Print Material</span></div>
+            <div class="exp-slide proj-bg-4"><img src="20220314-OUZ05537.jpg" alt="Documentation and social output"><span class="exp-slide-label">Documentation / Social Output</span></div>
+          </div>
+          <div class="exp-carousel-note"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="exp-item">
+    <button class="exp-row" type="button" aria-expanded="false">
+      <span class="exp-year">2024</span>
+      <span class="exp-role">Artist Intern</span>
+      <span class="exp-company">Efe Alpay Studio — Website Redesign, Artist Workflow Support</span>
+      <span class="exp-type">Digital</span>
+      <span class="exp-toggle">+</span>
+    </button>
+    <div class="exp-panel">
+      <div class="exp-panel-inner">
+        <div class="exp-copy">
+          <p class="exp-summary">
+            Assisted artist <strong>Efe Alpay</strong> across design process support and a website redesign. The role blended studio sensitivity with digital translation: how artistic practice is documented and communicated online.
+          </p>
+          <div class="exp-points">
+            <div class="exp-point">
+              <div class="exp-point-label">Focus</div>
+              <div class="exp-point-text">Website restructuring, design refinement, and support around <strong>presenting artistic work clearly in a digital environment</strong>.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">What I Did</div>
+              <div class="exp-point-text">Helped shape the artist’s web presence, organize material, and support visual decisions linked to the studio’s ongoing work.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">Tools</div>
+              <div class="exp-point-text">Web layout thinking, Adobe tools, image preparation, editorial framing.</div>
+            </div>
+          </div>
+        </div>
+        <div class="exp-carousel-wrap">
+          <div class="exp-carousel">
+            <div class="exp-slide proj-bg-2"><img src="efula-1.png" alt="Website redesign"><span class="exp-slide-label">Website Redesign</span></div>
+            <div class="exp-slide proj-bg-4"><img src="efula-2.png" alt="Studio materials"><span class="exp-slide-label">Studio Materials</span></div>
+            <div class="exp-slide proj-bg-1"><img src="efula-3.jpg" alt="Digital presentation"><span class="exp-slide-label">Digital Presentation</span></div>
+          </div>
+          <div class="exp-carousel-note"></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="exp-item">
+    <button class="exp-row" type="button" aria-expanded="false">
+      <span class="exp-year">2023</span>
+      <span class="exp-role">Influencer Marketing Intern</span>
+      <span class="exp-company">Kornişon — Data Research &amp; Audience Experience Projects</span>
+      <span class="exp-type">Marketing</span>
+      <span class="exp-toggle">+</span>
+    </button>
+    <div class="exp-panel">
+      <div class="exp-panel-inner">
+        <div class="exp-copy">
+          <p class="exp-summary">
+            Early internship experience centered on <strong>audience research, communication patterns, and campaign-facing creative support</strong>. It provided a foundation in reading publics, trends, and message behaviour.
+          </p>
+          <div class="exp-points">
+            <div class="exp-point">
+              <div class="exp-point-label">Focus</div>
+              <div class="exp-point-text">Supported <strong>data research, audience mapping, and campaign-related communication tasks</strong>.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">What I Built</div>
+              <div class="exp-point-text">Strengthened skills in <strong>insight gathering, communication framing, and translating research into usable outputs</strong>.</div>
+            </div>
+            <div class="exp-point">
+              <div class="exp-point-label">Relevance</div>
+              <div class="exp-point-text">Still informs how I think about <strong>viewer attention, audience entry points, and public-facing design decisions</strong>.</div>
+            </div>
+          </div>
+        </div>
+       
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Experiential Design <span>·</span></span>
+    <span class="marquee-item">Real-time Graphics <span>·</span></span>
+    <span class="marquee-item">Spatial Storytelling <span>·</span></span>
+    <span class="marquee-item">TouchDesigner <span>·</span></span>
+    <span class="marquee-item">Projection Mapping <span>·</span></span>
+    <span class="marquee-item">Audio-reactive Systems <span>·</span></span>
+    <span class="marquee-item">Interactive Installations <span>·</span></span>
+    <span class="marquee-item">Live Visuals <span>·</span></span>
+    <span class="marquee-item">Museum Design <span>·</span></span>
+    <span class="marquee-item">Generative Visuals <span>·</span></span>
+    <span class="marquee-item">Experiential Design <span>·</span></span>
+    <span class="marquee-item">Real-time Graphics <span>·</span></span>
+    <span class="marquee-item">Spatial Storytelling <span>·</span></span>
+    <span class="marquee-item">TouchDesigner <span>·</span></span>
+    <span class="marquee-item">Projection Mapping <span>·</span></span>
+    <span class="marquee-item">Audio-reactive Systems <span>·</span></span>
+    <span class="marquee-item">Interactive Installations <span>·</span></span>
+    <span class="marquee-item">Live Visuals <span>·</span></span>
+    <span class="marquee-item">Museum Design <span>·</span></span>
+    <span class="marquee-item">Generative Visuals <span>·</span></span>
+  </div>
+</div>
+
+<!-- ========================
+     3. WORK / PROJECTS
+======================== -->
+<div class="section-header" id="work">
+  <span class="section-label">Selected Work</span>
+  <span class="section-count">03 — Portfolio Categories</span>
+</div>
+
+<div class="projects-intro">
+  <div class="projects-intro-left">
+    Work that<br>builds<br><em>worlds.</em>
+  </div>
+  <div class="projects-intro-right">
+    A categorized selection of work spanning photography, videography, generative systems, graphic design, and interface design. This section now follows the same expandable logic as the Experience area: each category opens into a more deliberate, curated view instead of reading as a flat archive.
+  </div>
+</div>
+
+<div class="portfolio-accordion">
+
+  <article class="portfolio-acc-item open">
+    <button class="portfolio-acc-header" type="button" aria-expanded="true">
+      <span class="portfolio-acc-number">01</span>
+      <span class="portfolio-acc-title">Photography</span>
+      <span class="portfolio-acc-summary">Event, cultural, and personal image-making rooted in atmosphere and presence.</span>
+      <span class="portfolio-acc-toggle">+</span>
+    </button>
+    <div class="portfolio-acc-panel">
+      <div class="portfolio-acc-panel-inner">
+        <div class="portfolio-acc-meta">
+          <div class="portfolio-acc-meta-label">Overview</div>
+          <div class="portfolio-acc-meta-text">Photography across <strong>nightlife, cultural venues, and non-commissioned portrait-led work</strong> — centered on texture, timing, and the social atmosphere of a moment.</div>
+        </div>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <div class="portfolio-thumb proj-bg-1"><img src="Majalisimg-1.png" alt="Majalis nightlife photography"><div class="proj-noise"></div></div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Nightlife / Event</span>
+              <span class="portfolio-item-title">Majalis, Sonance, Mahmut Orhan, and festival-night documentation.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-thumb proj-bg-2"><img src="moetevent-1.png" alt="Moet x Artsy Photography"><div class="proj-noise"></div></div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Culture / Venue</span>
+              <span class="portfolio-item-title">Branding and event photography shaped around atmosphere, venue identity, and audience energy.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-thumb proj-bg-3"><img src="Ogulpersonal-1.png" alt="Manendria photography"><div class="proj-noise"></div></div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Non-Commissioned Works</span>
+              <span class="portfolio-item-title">Documentation of artistic narratives through portrait, mood, and personal visual storytelling.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="portfolio-acc-item">
+    <button class="portfolio-acc-header" type="button" aria-expanded="false">
+      <span class="portfolio-acc-number">02</span>
+      <span class="portfolio-acc-title">Videography</span>
+      <span class="portfolio-acc-summary">Short-form moving image work built through rhythm, editing, and event memory.</span>
+      <span class="portfolio-acc-toggle">+</span>
+    </button>
+    <div class="portfolio-acc-panel">
+      <div class="portfolio-acc-panel-inner">
+        <div class="portfolio-acc-meta">
+          <div class="portfolio-acc-meta-label">Overview</div>
+          <div class="portfolio-acc-meta-text">Video outputs spanning <strong>event recaps, essay film, and short-form cultural documentation</strong>, with attention to pacing, sequence, texture, and emotional continuity.</div>
+        </div>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <a href="https://www.youtube.com/watch?v=ngYk6IaWTKU" target="_blank" rel="noopener" style="display:block;">
+              <div class="portfolio-thumb proj-bg-4" style="cursor:pointer;">
+                <img src="https://img.youtube.com/vi/ngYk6IaWTKU/maxresdefault.jpg" alt="EXHIBITION CTY: PIECES — Antony Cairns">
+                <div class="proj-noise"></div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:52px;height:52px;background:rgba(0,0,0,0.55);border:1.5px solid rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.2s;">
+                    <div style="width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:16px solid white;margin-left:4px;"></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Event Recap</span>
+              <span class="portfolio-item-title">EXHIBITION CTY: PIECES — Antony Cairns. Short-form moving image outputs shaped for rhythm, atmosphere, and live energy.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <a href="https://www.youtube.com/watch?v=Cqdv9c6efcA" target="_blank" rel="noopener" style="display:block;">
+              <div class="portfolio-thumb proj-bg-2" style="cursor:pointer;">
+                <img src="https://img.youtube.com/vi/Cqdv9c6efcA/maxresdefault.jpg" alt="Video Essay: ADULTING">
+                <div class="proj-noise"></div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:52px;height:52px;background:rgba(0,0,0,0.55);border:1.5px solid rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                    <div style="width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:16px solid white;margin-left:4px;"></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Motion / Editing</span>
+              <span class="portfolio-item-title">Video Essay: ADULTING — Doğa Akın &amp; Sude Yüce. Video edits, motion cuts, and visual sequences across cultural and event-based projects.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <a href="https://www.youtube.com/shorts/p8jtSNqmIfY" target="_blank" rel="noopener" style="display:block;">
+              <div class="portfolio-thumb proj-bg-1" style="cursor:pointer;">
+                <img src="https://img.youtube.com/vi/p8jtSNqmIfY/hqdefault.jpg" alt="Cumhuriyet 101 Yaşında">
+                <div class="proj-noise"></div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:52px;height:52px;background:rgba(0,0,0,0.55);border:1.5px solid rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                    <div style="width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:16px solid white;margin-left:4px;"></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Narrative Still</span>
+              <span class="portfolio-item-title">Cumhuriyet 101 Yaşında — Frames built around pacing, texture, and emotional continuity.</span>
+              <span class="portfolio-item-credit" style="font-family:var(--mono);font-size:9px;letter-spacing:0.08em;color:var(--text-dim);margin-top:2px;">Videographer Assistant — Cihat Ordu</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="portfolio-acc-item">
+    <button class="portfolio-acc-header" type="button" aria-expanded="false">
+      <span class="portfolio-acc-number">03</span>
+      <span class="portfolio-acc-title">Processing / TouchDesigner</span>
+      <span class="portfolio-acc-summary">Real-time visual experiments across code, motion logic, and live-response systems.</span>
+      <span class="portfolio-acc-toggle">+</span>
+    </button>
+    <div class="portfolio-acc-panel">
+      <div class="portfolio-acc-panel-inner">
+        <div class="portfolio-acc-meta">
+          <div class="portfolio-acc-meta-label">Overview</div>
+          <div class="portfolio-acc-meta-text">Generative and code-based work built through <strong>real-time media, interaction studies, and experimental visual systems</strong> across Processing and TouchDesigner.</div>
+        </div>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <a href="https://www.youtube.com/watch?v=MHMFHDoV96U" target="_blank" rel="noopener" style="display:block;">
+              <div class="portfolio-thumb proj-bg-3" style="cursor:pointer;">
+                <img src="https://img.youtube.com/vi/MHMFHDoV96U/maxresdefault.jpg" alt="Processing generative visual">
+                <div class="proj-noise"></div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:52px;height:52px;background:rgba(0,0,0,0.55);border:1.5px solid rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                    <div style="width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:16px solid white;margin-left:4px;"></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Real-time Media</span>
+              <span class="portfolio-item-title">Generative systems, live visuals, and audio-reactive experiments.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <a href="https://www.youtube.com/shorts/tJx5IA5mrh8" target="_blank" rel="noopener" style="display:block;">
+              <div class="portfolio-thumb proj-bg-2" style="cursor:pointer;">
+                <img src="https://img.youtube.com/vi/tJx5IA5mrh8/hqdefault.jpg" alt="TouchDesigner sketch">
+                <div class="proj-noise"></div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:52px;height:52px;background:rgba(0,0,0,0.55);border:1.5px solid rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                    <div style="width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:16px solid white;margin-left:4px;"></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Prototype / Interaction</span>
+              <span class="portfolio-item-title">TouchDesigner sketches exploring motion logic, interactivity, and spatial behaviour.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <a href="https://www.youtube.com/shorts/NgD7Tswqa0k" target="_blank" rel="noopener" style="display:block;">
+              <div class="portfolio-thumb proj-bg-4" style="cursor:pointer;">
+                <img src="https://img.youtube.com/vi/NgD7Tswqa0k/hqdefault.jpg" alt="TouchDesigner code-based visuals">
+                <div class="proj-noise"></div>
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                  <div style="width:52px;height:52px;background:rgba(0,0,0,0.55);border:1.5px solid rgba(255,255,255,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                    <div style="width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:16px solid white;margin-left:4px;"></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Code-based Visuals</span>
+              <span class="portfolio-item-title">Processing and experimental visual outputs built around form, rhythm, and transformation.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="portfolio-acc-item">
+    <button class="portfolio-acc-header" type="button" aria-expanded="false">
+      <span class="portfolio-acc-number">04</span>
+      <span class="portfolio-acc-title">Graphic Design</span>
+      <span class="portfolio-acc-summary">Editorial systems, identity experiments, and composition-led visual language.</span>
+      <span class="portfolio-acc-toggle">+</span>
+    </button>
+    <div class="portfolio-acc-panel">
+      <div class="portfolio-acc-panel-inner">
+        <div class="portfolio-acc-meta">
+          <div class="portfolio-acc-meta-label">Overview</div>
+          <div class="portfolio-acc-meta-text">Graphic design work spanning <strong>editorial structure, layout systems, typography, and image-led composition</strong>. The LITHO 101 mockup is placed here as the lead editorial/system project.</div>
+        </div>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <div class="portfolio-thumb proj-bg-1">
+              <img src="magazine_mockup_2.jpg" alt="LITHO 101 guidebook mockup">
+              <div class="proj-noise"></div>
+            </div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Editorial / System</span>
+              <span class="portfolio-item-title">LITHO 101 — a guidebook-led editorial system built around structure, legibility, and the cultural translation of lithography.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-thumb proj-bg-4">
+              <img src="samedog.png" alt="Poster and graphic identity work">
+              <div class="proj-noise"></div>
+            </div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Identity / Layout</span>
+              <span class="portfolio-item-title">Graphic systems across print, deck design, communication, and presentation formats.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-thumb proj-bg-2">
+              <img src="lala.jpg" alt="Editorial composition and visual language study">
+              <div class="proj-noise"></div>
+            </div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Visual Language</span>
+              <span class="portfolio-item-title">Image, typography, and composition-led outputs developed with editorial sensitivity.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="portfolio-acc-item">
+    <button class="portfolio-acc-header" type="button" aria-expanded="false">
+      <span class="portfolio-acc-number">05</span>
+      <span class="portfolio-acc-title">UX / UI</span>
+      <span class="portfolio-acc-summary">Screen-based systems shaped through information hierarchy, flow, and interface logic.</span>
+      <span class="portfolio-acc-toggle">+</span>
+    </button>
+    <div class="portfolio-acc-panel">
+      <div class="portfolio-acc-panel-inner">
+        <div class="portfolio-acc-meta">
+          <div class="portfolio-acc-meta-label">Overview</div>
+          <div class="portfolio-acc-meta-text">Interface and systems work focused on <strong>clarity, hierarchy, journey mapping, multilingual information design, and digital experience structure</strong>. This section now brings together the <strong>Avail-a-Borrow</strong> identity, interface screens, and system-level workflow thinking as one connected digital experience.</div>
+        </div>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <div class="portfolio-thumb contain proj-bg-2"><img src="ux-2.png" alt="Avail-a-Borrow interface screens"><div class="proj-noise"></div></div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Interface Design</span>
+              <span class="portfolio-item-title">Screen-based systems shaped by information clarity, user flow, and visual hierarchy.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-thumb contain proj-bg-3"><img src="ux-3.png" alt="Avail-a-Borrow UX flow and interface architecture"><div class="proj-noise"></div></div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Journey / Structure</span>
+              <span class="portfolio-item-title">User journey mapping, interface architecture, and multilingual information design.</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-thumb contain proj-bg-1"><img src="ux-1.png" alt="Avail-a-Borrow system mockup"><div class="proj-noise"></div></div>
+            <div class="portfolio-meta">
+              <span class="portfolio-item-type">Digital Experience</span>
+              <span class="portfolio-item-title">Projects where interface, content logic, and visual systems operate together.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<!-- ========================
+     4. CONTACT
+======================== -->
+<div class="section-header" id="contact">
+  <span class="section-label">Contact</span>
+  <span class="section-count">04</span>
+</div>
+
+<div class="contact-layout">
+  <div class="contact-left">
+    <div class="contact-heading">
+      Let's build<br>
+      <em>something</em><br>
+      together.
+    </div>
+    <div class="contact-links">
+      <a href="mailto:doga.akin2@gmail.com" class="contact-link">
+        <span class="clink-name">doga.akin2@gmail.com</span>
+        <span class="clink-arrow">↗</span>
+      </a>
+      <a href="https://linkedin.com/in/doğa-akın-14713320b/" target="_blank" class="contact-link">
+        <span class="clink-name">LinkedIn</span>
+        <span class="clink-arrow">↗</span>
+      </a>
+      <a href="https://instagram.com/doga.akn/" target="_blank" class="contact-link">
+        <span class="clink-name">Instagram</span>
+        <span class="clink-arrow">↗</span>
+      </a>
+      <a href="https://drive.google.com/drive/folders/1uvuHC69as9oMXKgoBTCPr2dea-nosqe8/" target="_blank" class="contact-link">
+        <span class="clink-name">CV</span>
+        <span class="clink-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+  <div class="contact-right">
+    <div>
+      <div class="contact-info-block">
+        <div class="ci-label">Based in</div>
+        <div class="ci-value">Ankara, Turkey</div>
+      </div>
+      <div class="contact-info-block">
+        <div class="ci-label">Available for</div>
+        <div class="ci-value">Internships · Freelance · Full-time (2026+)</div>
+      </div>
+      <div class="contact-info-block">
+        <div class="ci-label">Looking toward</div>
+        <div class="ci-value">Experiential studios, Immersive production environments, Masters programs in Europe (2026–27)</div>
+      </div>
+      <div class="contact-info-block">
+        <div class="ci-label">Education</div>
+        <div class="ci-value">Visual Communication Design, TED University — graduated / final-year trajectory</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-l">© 2026 Doğa Akın — All rights reserved</div>
+  <div class="footer-r">VCD · TED University · VCODE452</div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  if (cursor) {
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+  }
+
+  document.querySelectorAll('a, .project-entry, .portfolio-item, .tag, .exp-row, .portfolio-acc-header').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      if (!cursor) return;
+      cursor.style.width = '18px';
+      cursor.style.height = '18px';
+      cursor.style.background = 'transparent';
+      cursor.style.border = '1px solid var(--accent)';
+    });
+    el.addEventListener('mouseleave', () => {
+      if (!cursor) return;
+      cursor.style.width = '6px';
+      cursor.style.height = '6px';
+      cursor.style.background = 'var(--accent)';
+      cursor.style.border = 'none';
+    });
+  });
+
+  // Active nav on scroll
+  const ids = ['home','about','work','contact'];
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  const expItems = document.querySelectorAll('.exp-item');
+  expItems.forEach(item => {
+    const trigger = item.querySelector('.exp-row');
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      expItems.forEach(other => {
+        other.classList.remove('open');
+        const otherBtn = other.querySelector('.exp-row');
+        if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  const portfolioItems = document.querySelectorAll('.portfolio-acc-item');
+  portfolioItems.forEach(item => {
+    const trigger = item.querySelector('.portfolio-acc-header');
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      portfolioItems.forEach(other => {
+        other.classList.remove('open');
+        const otherBtn = other.querySelector('.portfolio-acc-header');
+        if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
